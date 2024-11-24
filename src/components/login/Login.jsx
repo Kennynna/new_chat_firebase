@@ -3,7 +3,7 @@ import toast from 'react-hot-toast';
 import './login.css'; // Импортируем CSS файл
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth, db } from '../../lib/firebase';
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc,  } from "firebase/firestore";
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -19,7 +19,7 @@ function Login() {
       await setDoc(doc(db, "users", res.user.uid), {
         username,
         email,
-        id: res.user.uid, 
+        id: res.user.uid,
         blocked:[]
       });
       await setDoc(doc(db, "userchats", res.user.uid), {
@@ -57,11 +57,11 @@ function Login() {
       setPassword('')
       setEmail('')
     }
-    
+
   };
 
   return (
-    <div className="login-container bg-gray-600 text-black flex gap-10">
+    <div className="login-container  bg-[rgba(17,25,40,0.75)] backdrop-blur-[19px] backdrop-saturate-[180%] text-black flex gap-10 items-stretch rounded-xl">
       <form className="login-form" onSubmit={registerUser} >
         <h2 className="login-title">Регистрация</h2>
         <div className="form-group ">
@@ -134,7 +134,7 @@ function Login() {
           Войти
         </button>
       </form>
-      
+
     </div>
   );
 }

@@ -13,7 +13,7 @@ export const userStore = create((set) => ({
 
 
       if (docSnap.exists()) {
-        set({ currentUser: docSnap.data(), isLoading: false })
+        set({ currentUser: docSnap.data(), isLoading: false }) // существует ли такой документ в БД
       } else {
         set({ currentUser: null, isLoading: false })
       }
@@ -21,4 +21,18 @@ export const userStore = create((set) => ({
       return set({ currentUser: null, isLoading: false })
     }
   }
+}))
+
+
+export const userStoreMessage = create((set) => ({
+  message: [],
+  isLoading: true,
+  addMessage: (messageData) => set((state) => ({
+    message: [...state.message, {
+      date: messageData.date,
+      id: messageData.id,
+      message: messageData.message,
+      name: messageData.name
+    }]
+  })),
 }))
