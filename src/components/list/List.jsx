@@ -39,7 +39,7 @@ const List = ({ user }) => {
         <div className='list border-r border-gray-500 border-opacity-50 flex flex-col px-4 '>
             <div className={'flex flex-col gap-4'} >
                 <div className={'flex justify-between  gap-8 items-center'}>
-                    {user ? <p>{user.username}</p> : <p>user</p>}
+                    {user ? <p className='text-2xl uppercase'>{user.username}</p> : <p>user</p>}
                     <div className={'flex justify-between gap-3 item-center'}>
                         <Ellipsis size={20} />
                         <Video size={20} />
@@ -47,9 +47,13 @@ const List = ({ user }) => {
                     </div>
                 </div>
 
-                <div className={'flex items-center gap-4'}>
+                <div className={'flex items-start gap-4 flex-col justify-start w-full'}>
+
                     <Input placeholder={'Search chat...'} style={{ color: 'white' }} />
-                    <ListModal />
+                    <div className='flex items-center gap-2'>
+                        <p>Добавить </p>
+                        <ListModal />
+                    </div>
                 </div>
                 <div>
                     <UserList chats={chats} />
