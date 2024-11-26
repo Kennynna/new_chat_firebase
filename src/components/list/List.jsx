@@ -37,7 +37,7 @@ const List = ({ user }) => {
         }
     }, [currentUser.id]);
     return (
-        <div className='list border-r border-gray-500 flex flex-col px-4 '>
+        <div className='list border-r border-gray-500 border-opacity-50 flex flex-col px-4 '>
             <div className={'flex flex-col gap-4'} >
                 <div className={'flex justify-between  gap-8 items-center'}>
                     {user ? <p>{user.username}</p> : <p>user</p>}

@@ -71,7 +71,7 @@ const MemoizedTextarea = React.memo(React.forwardRef(({value, onChange, onKeyDow
     />
 )));
 
-const TextArea = () => {
+const TextArea = ({text, setText}) => {
     const [open, setOpen] = useState(false);
     const [text, setText] = useState('');
     const {addMessage} = userStoreMessage();
