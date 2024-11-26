@@ -5,8 +5,9 @@ import { userStore } from './userStore';
 export const useChatStore = create((set) => ({
   chat: null,
   user: null,
+  friendName: null,
   isCurrentUserBlocked:false,
-  changeChat: (chatId, user) => {
+  changeChat: (chatId, user , friendName) => {
     const currentUser = userStore.getState().currentUser;
 
     //Проверка на блокировку
@@ -34,8 +35,9 @@ export const useChatStore = create((set) => ({
 
     else{
       return set({
+        friendName,
         chatId,
-        user: null,
+        user: user,
         isCurrentUserBlocked: false,
         isReceiverBlocked: true
       })

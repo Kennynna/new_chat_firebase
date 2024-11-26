@@ -33,7 +33,7 @@ const App = () => {
         {/*<h1 className="text-2xl font-bold mb-4"> name {currentUser?.username}  </h1>*/}
         <List user={currentUser}/>
         {chatId && <Chat />}
-        {chatId && <Detail />}
+        {currentUser && <Detail />}
       </div>
 
       <Toaster />

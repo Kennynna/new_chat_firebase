@@ -26,7 +26,6 @@ const List = ({ user }) => {
                     return { ...item, user }
                 })
                 const chatData = await Promise.all(promises)
-                console.log(chatData)
                 setChats(chatData.sort((a, b) => b.updatedAt - a.updatedAt))
             }
 

@@ -58,7 +58,7 @@ const Textarea = styled(BaseTextareaAutosize)(
   `
 );
 
-const MemoizedTextarea = React.memo(React.forwardRef(({value, onChange, onKeyDown}, ref) => (
+const MemoizedTextarea = React.memo(React.forwardRef(({ value, onChange }, ref) => (
     <Textarea
         aria-label="textarea"
         minRows={2}
@@ -66,14 +66,12 @@ const MemoizedTextarea = React.memo(React.forwardRef(({value, onChange, onKeyDow
         sx={{backgroundColor: 'transparent', color: 'white'}}
         value={value}
         onChange={onChange}
-        onKeyDown={onKeyDown}
         ref={ref}
     />
 )));
 
-const TextArea = ({text, setText}) => {
+const TextArea = ({ text, setText, handleSend }) => {
     const [open, setOpen] = useState(false);
-    const [text, setText] = useState('');
     const {addMessage} = userStoreMessage();
     const textareaRef = useRef(null);
 
@@ -96,14 +94,7 @@ const TextArea = ({text, setText}) => {
         }
     }
 
-    const enterDawn = (e) => {
-        if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault(); // Предотвращаем стандартное поведение (перенос строки)
-            if (text.trim()) {
-                handleMessage();
-            }
-        }
-    };
+ 
 
     const handleChange = useCallback((e) => {
         setText(e.target.value);
@@ -135,7 +126,6 @@ const TextArea = ({text, setText}) => {
                 <MemoizedTextarea
                     value={text}
                     onChange={handleChange}
-                    onKeyDown={enterDawn}
                     ref={textareaRef}
                 />
                 <div className={'relative w-8 h-8'}>
@@ -144,7 +134,7 @@ const TextArea = ({text, setText}) => {
                 </div>
                 <Button
                     style={{backgroundColor: '#1e40af', color: 'white', padding: '6px 15px'}}
-                    onClick={handleMessage}
+                    onClick={handleSend}
                 >
                     Отправить
                 </Button>

@@ -41,6 +41,7 @@ export default function ListModal() {
                     ...doc.data()
                 }));
                 setUser(usersData);
+                handleClose();
             } else {
                 setUser([]); // Если пользователи не найдены
             }
