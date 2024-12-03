@@ -108,6 +108,7 @@ const Chat = () => {
                         </span>
                     </div>
                 ))}
+                {chat?.messages?.length === 0 && <p className='text-white text-center'>У вас пока нет сообщений</p>}
             </div>
             <TextArea text={text} setText={setText} handleSend={handleSend} />
         </div>

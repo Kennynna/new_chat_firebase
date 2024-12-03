@@ -13,8 +13,8 @@ import { db } from '../lib/firebase.js'
 export default function UserList({ chats }) {
     const { changeChat } = useChatStore();
     const { currentUser } = userStore();
-
-    const handleSelectChat = async (chat, chatFriendNme) => {
+    const [active, setActive] = React.useState(null)
+    const handleSelectChat = async (chat, chatFriendNme,index) => {
         const userChats = chats.map(item => {
             const { user, ...rest } = item;
             return rest
@@ -22,7 +22,7 @@ export default function UserList({ chats }) {
         const chatIndex = userChats.findIndex(item => item.chatId === chat.chatId);
         userChats[chatIndex].isSeen = true;
         const userChatRef = doc(db, 'userchats', currentUser.id);
-
+        setActive(index)
         try {
             await updateDoc(userChatRef, {
                 chats: userChats,
@@ -40,10 +40,11 @@ export default function UserList({ chats }) {
                     {chats.map((chat, index) => (
                         <React.Fragment key={index}>
                             <ListItem
-                                alignItems="flex-start flex item-center"
-                                className={`hover:bg-gray-600 transition-all ${!chat.isSeen ? 'bg-blue-200' : ''
+                                alignItems="flex-start flex item-center "
+                                className={`hover:bg-gray-600 transition-all mt-3 ${!chat.isSeen ? 'bg-blue-200' : ''
                                     }`}
-                                onClick={() => handleSelectChat(chat, chat.user.username )}
+                                onClick={() => handleSelectChat(chat, chat.user.username, index )}
+                                sx={{ outline: active === index ? '2px solid #1C2025' : '', borderRadius: '10px'}}
                             >
                                 <ListItemAvatar>
                                     <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
