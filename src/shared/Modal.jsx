@@ -1,13 +1,24 @@
 import * as React from 'react';
+import { useState } from "react";
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
-import {SquarePlus} from "lucide-react";
 import Input from "@mui/material/Input";
-import {collection, getDoc, query, where, getDocs, setDoc, doc,serverTimestamp,updateDoc,arrayUnion} from "firebase/firestore";
-import {db} from "../lib/firebase.js";
-import {useState} from "react";
-import {userStore} from "../lib/userStore.js";
+import { SquarePlus } from 'lucide-react';
+import { toast } from 'react-hot-toast';
+import {
+    collection,
+    query,
+    where,
+    getDocs,
+    setDoc,
+    doc,
+    serverTimestamp,
+    updateDoc,
+    arrayUnion
+} from "firebase/firestore";
+import { db } from "../lib/firebase.js";
+import { userStore } from "../lib/userStore.js";
 
 const style = {
     position: 'absolute',
@@ -23,7 +34,7 @@ export default function ListModal() {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    const {currentUser} = userStore()
+    const { currentUser } = userStore()
 
     const [user, setUser] = useState(null);
 
@@ -41,19 +52,20 @@ export default function ListModal() {
                     ...doc.data()
                 }));
                 setUser(usersData);
-                handleClose();
             } else {
                 setUser([]); // Если пользователи не найдены
+                toast.error("Пользователь не найден");
             }
         } catch (error) {
             console.error("Ошибка при поиске пользователя:", error);
             setUser([]);
+            toast.error("Ошибка при поиске пользователя");
         }
     }
 
     const handleAddFriend = async () => {
         if (!user || user.length === 0) {
-            console.error("Пользователь не выбран");
+            toast.error("Пользователь не выбран");
             return;
         }
 
@@ -67,7 +79,6 @@ export default function ListModal() {
                 createdAt: serverTimestamp(),
                 messages: []
             });
-            console.log(newChatRef.id);
 
             await updateDoc(doc(userChatsRef, selectedUser.id), {
                 chats: arrayUnion({
@@ -87,13 +98,17 @@ export default function ListModal() {
                 })
             });
 
+            toast.success("Собеседник успешно добавлен");
+            handleClose(); // Закрываем модальное окно после успешного добавления
         } catch (er) {
-            console.log(er);
+            console.error(er);
+            toast.error("Ошибка при добавлении собеседника");
         }
     }
+
     return (
         <div>
-            <SquarePlus style={{cursor: 'pointer'}} size={20} onClick={handleOpen}/>
+            <SquarePlus style={{ cursor: 'pointer' }} size={20} onClick={handleOpen} />
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -101,17 +116,21 @@ export default function ListModal() {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <div className={' bg-[rgba(17,25,40,0.15)] backdrop-blur-[11px] backdrop-saturate-[130%] p-4 overflow-auto max-h-60'}>
-                        <div className={' mb-10'}>
-                            <form className={'flex item-center gap-4 justify-between'} onSubmit={handleSearch}>
-                            <Input placeholder={'Найти собеседника...'} style={{color: 'white'}}  name='username'/>
-                            <Button
-                                style={{backgroundColor: '#111827', color: 'white', fontWeight: 'bold'}} type='submit'>Искать</Button>
+                    <div className='bg-[rgba(17,25,40,0.15)] backdrop-blur-[11px] backdrop-saturate-[130%] p-4 overflow-auto max-h-60'>
+                        <div className='mb-10'>
+                            <form className='flex item-center gap-4 justify-between' onSubmit={handleSearch}>
+                                <Input placeholder='Найти собеседника...' style={{ color: 'white' }} name='username' />
+                                <Button
+                                    style={{ backgroundColor: '#111827', color: 'white', fontWeight: 'bold' }}
+                                    type='submit'
+                                >
+                                    Искать
+                                </Button>
                             </form>
                         </div>
 
-                        {user? user.map((user) => (
-                            <div className={'mt-4 flex items-center gap-4 justify-between'} key={user.username}>
+                        {user ? user.map((user) => (
+                            <div className='mt-4 flex items-center gap-4 justify-between' key={user.username}>
                                 <p>{user.username}</p>
                                 <Button
                                     onClick={handleAddFriend}
@@ -119,14 +138,16 @@ export default function ListModal() {
                                         backgroundColor: '#111827',
                                         color: 'white',
                                         fontWeight: 'bold'
-                                    }}>Добавить</Button>
+                                    }}
+                                >
+                                    Добавить
+                                </Button>
                             </div>
                         )) : null}
-
-
                     </div>
                 </Box>
             </Modal>
         </div>
     );
 }
+

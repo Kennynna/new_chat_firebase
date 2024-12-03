@@ -36,7 +36,7 @@ const List = ({ user }) => {
         }
     }, [currentUser.id]);
     return (
-        <div className='list border-r border-gray-500 border-opacity-50 flex flex-col px-4 '>
+        <div className='list border-r border-gray-500 border-opacity-50 flex flex-col px-4 pt-4'>
             <div className={'flex flex-col gap-4'} >
                 <div className={'flex justify-between  gap-8 items-center'}>
                     {user ? <p className='text-2xl uppercase'>{user.username}</p> : <p>user</p>}
@@ -48,10 +48,8 @@ const List = ({ user }) => {
                 </div>
 
                 <div className={'flex items-start gap-4 flex-col justify-start w-full'}>
-
-                    <Input placeholder={'Search chat...'} style={{ color: 'white' }} />
                     <div className='flex items-center gap-2'>
-                        <p>Добавить </p>
+                        <p>Добавить</p>
                         <ListModal />
                     </div>
                 </div>

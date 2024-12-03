@@ -29,7 +29,7 @@ const App = () => {
   return (
 
       <>
-      <div className='container px-5 py-3'>
+      <div className='container px-5 '>
         {/*<h1 className="text-2xl font-bold mb-4"> name {currentUser?.username}  </h1>*/}
         <List user={currentUser}/>
         {chatId && <Chat />}

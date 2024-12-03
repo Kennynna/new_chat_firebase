@@ -1,10 +1,19 @@
 import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../lib/firebase';
-import toast from 'react-hot-toast';
-import AuthForm from './AuthForm';
+import { toast } from 'react-hot-toast';
+import {
+  TextField,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  Typography,
+  Container,
+  Box
+} from '@mui/material';
 
-const Login= () => {
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -23,33 +32,62 @@ const Login= () => {
   };
 
   return (
-    <AuthForm title="Вход" onSubmit={loginUser}>
-      <div className="form-group">
-        <label htmlFor="login-email">Email</label>
-        <input
-          type="email"
-          id="login-email"
-          name="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="login-password">Пароль:</label>
-        <input
-          type="password"
-          id="login-password"
-          name="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </div>
-      <button type="submit" className="login-button mt-10">
-        Войти
-      </button>
-    </AuthForm>
+    <Container component="main" >
+      <Box
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Card sx={{ width: '100%', mt: 2 }}>
+          <CardHeader
+            title={
+              <Typography variant="h5" component="h1" align="center">
+                Вход
+              </Typography>
+            }
+          />
+          <CardContent>
+            <Box component="form" onSubmit={loginUser} sx={{ mt: 1 }}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="login-email"
+                label="Email"
+                name="email"
+                autoComplete="email"
+                autoFocus
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Пароль"
+                type="password"
+                id="login-password"
+                autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Войти
+              </Button>
+            </Box>
+          </CardContent>
+        </Card>
+      </Box>
+    </Container>
   );
 };
 

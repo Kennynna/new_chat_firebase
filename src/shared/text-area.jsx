@@ -1,10 +1,10 @@
-import React, {useState, useCallback, useMemo, useRef} from 'react';
-import {TextareaAutosize as BaseTextareaAutosize} from '@mui/base/TextareaAutosize';
-import {styled} from '@mui/system';
+import React, { useState, useCallback, useMemo, useRef } from 'react';
+import { TextareaAutosize as BaseTextareaAutosize } from '@mui/base/TextareaAutosize';
+import { styled } from '@mui/system';
 import Button from "@mui/material/Button";
 import EmojiPicker from 'emoji-picker-react';
-import {Smile} from 'lucide-react';
-import {userStoreMessage} from "../lib/userStore.js";
+import { Smile } from 'lucide-react';
+import { userStoreMessage } from "../lib/userStore.js";
 
 const blue = {
     100: '#DAECFF',
@@ -29,15 +29,15 @@ const grey = {
 };
 
 const Textarea = styled(BaseTextareaAutosize)(
-    ({theme}) => `
+    ({ theme }) => `
     box-sizing: border-box;
     width: 100%;
     font-family: 'IBM Plex Sans', sans-serif;
     font-size: 0.875rem;
     font-weight: 400;
     line-height: 1.5;
-    padding: 8px 12px;
-    border-radius: 8px;
+    padding: 12px;
+    border-radius: 12px;
     color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};
     background: ${theme.palette.mode === 'dark' ? grey[900] : '#fff'};
     border: 1px solid ${theme.palette.mode === 'dark' ? grey[700] : grey[200]};
@@ -62,8 +62,14 @@ const MemoizedTextarea = React.memo(React.forwardRef(({ value, onChange }, ref) 
     <Textarea
         aria-label="textarea"
         minRows={2}
-        placeholder="Text"
-        sx={{backgroundColor: 'transparent', color: 'white'}}
+        placeholder="Введите сообщение..."
+        sx={{
+            backgroundColor: 'transparent',
+            color: 'white',
+            '&::placeholder': {
+                color: 'rgba(255, 255, 255, 0.5)',
+            },
+        }}
         value={value}
         onChange={onChange}
         ref={ref}
@@ -72,11 +78,11 @@ const MemoizedTextarea = React.memo(React.forwardRef(({ value, onChange }, ref) 
 
 const TextArea = ({ text, setText, handleSend }) => {
     const [open, setOpen] = useState(false);
-    const {addMessage} = userStoreMessage();
+    const { addMessage } = userStoreMessage();
     const textareaRef = useRef(null);
 
     const formatDate = (date) => {
-        const options = {day: 'numeric', month: 'long'};
+        const options = { day: 'numeric', month: 'long' };
         return new Date(date).toLocaleDateString('ru-RU', options);
     }
 
@@ -94,25 +100,24 @@ const TextArea = ({ text, setText, handleSend }) => {
         }
     }
 
- 
-
     const handleChange = useCallback((e) => {
         setText(e.target.value);
-    }, []);
+    }, [setText]);
 
     const handleEmojiClick = useCallback((emojiObject) => {
         setText((prevText) => prevText + emojiObject.emoji);
         setOpen(false);
-    }, []);
+    }, [setText]);
 
     const memoizedEmojiPicker = useMemo(() => (
-        <EmojiPicker
-            open={open}
-            onEmojiClick={handleEmojiClick}
-            className={'absolute left-0 bottom-[500px] z-10'}
-            emojiStyle='apple'
-        />
-    ), [open, handleEmojiClick]);
+        <div className="absolute bottom-full right-0 mb-2">
+            <EmojiPicker
+                onEmojiClick={handleEmojiClick}
+                disableAutoFocus
+                native
+            />
+        </div>
+    ), [handleEmojiClick]);
 
     const scrollToBottom = () => {
         if (textareaRef.current) {
@@ -121,19 +126,28 @@ const TextArea = ({ text, setText, handleSend }) => {
     };
 
     return (
-        <div className={'flex flex-col gap-4 items-center pr-2'}>
-            <div className={'flex items-center gap-2 w-full '}>
+        <div className='flex flex-col gap-4 items-center p-4 bg-gray-800 relative'>
+            <div className='flex items-center gap-2 w-full'>
                 <MemoizedTextarea
                     value={text}
                     onChange={handleChange}
                     ref={textareaRef}
                 />
-                <div className={'relative w-8 h-8'}>
-                    <Smile className="cursor-pointer" onClick={() => setOpen(!open)}/>
+                <div className='relative'>
+                    <Smile
+                        className="w-6 h-6 text-gray-300 hover:text-white cursor-pointer transition-colors"
+                        onClick={() => setOpen(!open)}
+                    />
                     {open && memoizedEmojiPicker}
                 </div>
                 <Button
-                    style={{backgroundColor: '#1e40af', color: 'white', padding: '6px 15px'}}
+                    style={{
+                        backgroundColor: '#1e40af',
+                        color: 'white',
+                        padding: '8px 16px',
+                        borderRadius: '8px',
+                        textTransform: 'none',
+                    }}
                     onClick={handleSend}
                 >
                     Отправить

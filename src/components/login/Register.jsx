@@ -2,8 +2,17 @@ import React, { useState } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth, db } from '../../lib/firebase';
 import { doc, setDoc } from "firebase/firestore";
-import toast from 'react-hot-toast';
-import AuthForm from './AuthForm';
+import { toast } from 'react-hot-toast';
+import {
+  TextField,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  Typography,
+  Container,
+  Box
+} from '@mui/material';
 
 const Register = () => {
   const [username, setUsername] = useState('');
@@ -38,44 +47,73 @@ const Register = () => {
   };
 
   return (
-    <AuthForm title="Регистрация" onSubmit={registerUser}>
-      <div className="form-group">
-        <label htmlFor="register-username">Имя пользователя:</label>
-        <input
-          type="text"
-          id="register-username"
-          name="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="register-email">Email</label>
-        <input
-          type="email"
-          id="register-email"
-          name="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="register-password">Пароль:</label>
-        <input
-          type="password"
-          id="register-password"
-          name="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </div>
-      <button type="submit" className="login-button">
-        Регистрация
-      </button>
-    </AuthForm>
+    <Container component="main" maxWidth="xs">
+      <Box
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Card sx={{ width: '100%', mt: 2 }}>
+          <CardHeader
+            title={
+              <Typography variant="h5" component="h1" align="center">
+                Регистрация
+              </Typography>
+            }
+          />
+          <CardContent>
+            <Box component="form" onSubmit={registerUser} sx={{ mt: 1 }}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="register-username"
+                label="Имя пользователя"
+                name="username"
+                autoComplete="username"
+                autoFocus
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="register-email"
+                label="Email"
+                name="email"
+                autoComplete="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Пароль"
+                type="password"
+                id="register-password"
+                autoComplete="new-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Регистрация
+              </Button>
+            </Box>
+          </CardContent>
+        </Card>
+      </Box>
+    </Container>
   );
 };
 
