@@ -5,13 +5,15 @@ export const userStore = create((set) => ({
   currentUser: null,
   isLoading: true,
   fetchUserInfo: async (uid) => {
+    console.log('uid', uid);
     if (!uid) return set({ currentUser: null, isLoading: false })
-
+    
     try {
+      console.log('fetchUserInfo успешно')
       const docRef = doc(db, "users", uid);
+      console.log('docRef', docRef);
       const docSnap = await getDoc(docRef);
-
-
+      console.log('docSnap.data()', docSnap.data());
       if (docSnap.exists()) {
         set({ currentUser: docSnap.data(), isLoading: false }) // существует ли такой документ в БД
       } else {

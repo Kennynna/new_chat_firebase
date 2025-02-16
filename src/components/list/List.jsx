@@ -13,7 +13,9 @@ import ListModal from "../../shared/Modal.jsx";
 const List = ({ user }) => {
     const [chats, setChats] = useState([]);
     const { currentUser } = userStore()
+    
     useEffect(() => {
+        console.log('List.tsx ', currentUser)
         const unSub = onSnapshot(doc(db, 'userchats', currentUser.id),
             async (res) => {
                 const items = res.data().chats;

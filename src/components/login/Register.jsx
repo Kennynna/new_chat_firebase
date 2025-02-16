@@ -23,15 +23,21 @@ const Register = () => {
     event.preventDefault();
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
+      console.log('res', res);
+      console.log("Создаем документ в коллекции users");
       await setDoc(doc(db, "users", res.user.uid), {
         username,
         email,
         id: res.user.uid,
         blocked: []
       });
+      console.log("Документ users создан");
+
+      console.log("Создаем документ в коллекции userchats");
       await setDoc(doc(db, "userchats", res.user.uid), {
         chats: []
       });
+      console.log("Документ userchats создан");
       toast.success('Регистрация прошла успешно');
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {

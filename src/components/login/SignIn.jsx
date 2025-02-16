@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../lib/firebase';
+import { auth } from '../../lib/firebase.js';
 import { toast } from 'react-hot-toast';
 import {
   TextField,
@@ -18,16 +18,20 @@ const Login = () => {
   const [password, setPassword] = useState('');
 
   const loginUser = async (event) => {
-    event.preventDefault();
+    console.log(email, password);
     try {
+      event.preventDefault();
       await signInWithEmailAndPassword(auth, email, password);
+      console.log('Вход выполнен успешно');
       toast.success('Вход выполнен успешно');
     } catch (error) {
       console.error(error);
-      toast.error('Ошибка при входе');
-    } finally {
       setEmail('');
       setPassword('');
+      toast.error('Ошибка при входе');
+    } finally {
+      toast.error('Ошибка при входе');
+
     }
   };
 
