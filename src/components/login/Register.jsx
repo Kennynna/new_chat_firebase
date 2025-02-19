@@ -109,6 +109,11 @@ const Register = () => {
                 autoFocus
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
+                sx={
+                  {
+                    color: '#f9f9f9'
+                  }
+                }
               />
               <TextField
                 margin="normal"
@@ -120,6 +125,11 @@ const Register = () => {
                 autoComplete="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                sx={
+                  {
+                    color: '#f9f9f9'
+                  }
+                }
               />
               <TextField
                 margin="normal"
@@ -132,6 +142,11 @@ const Register = () => {
                 autoComplete="new-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                sx={
+                  {
+                    color: '#f9f9f9'
+                  }
+                }
               />
             </Box>
           </CardContent>

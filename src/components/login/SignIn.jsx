@@ -92,6 +92,11 @@ const Login = () => {
                   autoFocus
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  sx={
+                    {
+                      color: '#f9f9f9'
+                    }
+                  }
                 />
                 <TextField
                   margin="normal"
@@ -104,6 +109,11 @@ const Login = () => {
                   autoComplete="current-password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  sx={
+                    {
+                      color: '#f9f9f9'
+                    }
+                  }
                 />
               </Box>
             </CardContent>
