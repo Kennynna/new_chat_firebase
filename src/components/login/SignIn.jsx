@@ -61,7 +61,10 @@ const Login = () => {
       setLoading(false)
     }
   };
-
+  const Input = styled(TextField)({
+    color: '#f9f9f9 !important'
+  });
+  
   return (
     <Block component="main" >
       <Box
@@ -81,7 +84,7 @@ const Login = () => {
 
             <CardContent>
               <Box component="form" onSubmit={loginUser} sx={{ mt: 1 }}>
-                <TextField
+                <Input
                   margin="normal"
                   required
                   fullWidth
@@ -98,7 +101,7 @@ const Login = () => {
                     }
                   }
                 />
-                <TextField
+                <Input
                   margin="normal"
                   required
                   fullWidth

@@ -42,6 +42,11 @@ const Block = styled(Container)({
 
 
 
+
+
+
+
+
 const Register = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -98,7 +103,7 @@ const Register = () => {
 
           <CardContent>
             <Box component="form" onSubmit={registerUser} sx={{ mt: 1, maxWidth: '100%' }}>
-              <TextField
+              <Input
                 margin="normal"
                 required
                 fullWidth
@@ -115,7 +120,7 @@ const Register = () => {
                   }
                 }
               />
-              <TextField
+              <Input
                 margin="normal"
                 required
                 fullWidth
@@ -131,7 +136,8 @@ const Register = () => {
                   }
                 }
               />
-              <TextField
+              <Input
+                className='input'
                 margin="normal"
                 required
                 fullWidth
@@ -159,3 +165,6 @@ const Register = () => {
 
 export default Register;
 
+export const Input = styled(TextField)({
+  color: '#f9f9f9 !important'
+});
