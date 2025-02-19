@@ -4,6 +4,8 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import { auth } from '../../lib/firebase';
 import { userStore } from '../../lib/userStore';
+
+
 const Detail = () => {
   return (
     <div className='detail ml-2'>

@@ -1,9 +1,9 @@
 import React from 'react'
 import List from "./components/list/List"
 import Chat from "./components/chat/Chat"
-import Detail from "./components/detail/detail"
+import Detail from "./components/detail/Detail"
 import Login from "./components/login/Login"
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 import { userStore } from "./lib/userStore"
 import './index.css'
 import { useEffect } from "react";

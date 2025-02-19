@@ -10,7 +10,7 @@ import { useState } from 'react';
 
 import { useChatStore } from '../lib/chatStore';
 import { userStore } from '../lib/userStore';
-import { collection, query, where, getDocs, setDoc, doc, serverTimestamp, updateDoc, arrayUnion, onSnapshot, getDoc } from "firebase/firestore";
+import { doc, updateDoc, } from "firebase/firestore";
 import { db } from '../lib/firebase.js'
 
 export default function UserList({ chats, loading }) {

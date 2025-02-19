@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import './list.css'
-import Input from "@mui/material/Input";
 import { Ellipsis, Video, PencilLine } from "lucide-react"
 import UserList from "../../shared/user-list.jsx";
 import { userStore } from "../../lib/userStore.js";
 import { db } from '../../lib/firebase.js'
 import { doc, getDoc, onSnapshot, } from "firebase/firestore";
-import { SquarePlus } from 'lucide-react'
 import ListModal from "../../shared/Modal.jsx";
 
 
