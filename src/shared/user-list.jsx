@@ -5,16 +5,19 @@ import Divider from '@mui/material/Divider';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
+import Skeleton from '@mui/material/Skeleton';
+import { useState } from 'react';
+
 import { useChatStore } from '../lib/chatStore';
 import { userStore } from '../lib/userStore';
 import { collection, query, where, getDocs, setDoc, doc, serverTimestamp, updateDoc, arrayUnion, onSnapshot, getDoc } from "firebase/firestore";
 import { db } from '../lib/firebase.js'
 
-export default function UserList({ chats }) {
+export default function UserList({ chats, loading }) {
     const { changeChat } = useChatStore();
     const { currentUser } = userStore();
-    const [active, setActive] = React.useState(null)
-    const handleSelectChat = async (chat, chatFriendNme,index) => {
+    const [active, setActive] = useState(null)
+    const handleSelectChat = async (chat, chatFriendNme, index) => {
         const userChats = chats.map(item => {
             const { user, ...rest } = item;
             return rest
@@ -29,8 +32,9 @@ export default function UserList({ chats }) {
             })
             changeChat(chat.chatId, chat.user, chatFriendNme);
         } catch (error) {
-
+            console.log(error)
         }
+
 
     }
     return (
@@ -43,8 +47,8 @@ export default function UserList({ chats }) {
                                 alignItems="flex-start flex item-center "
                                 className={`hover:bg-gray-600 transition-all mt-3 ${!chat.isSeen ? 'bg-blue-200' : ''
                                     }`}
-                                onClick={() => handleSelectChat(chat, chat.user.username, index )}
-                                sx={{ outline: active === index ? '2px solid #1C2025' : '', borderRadius: '10px'}}
+                                onClick={() => handleSelectChat(chat, chat.user.username, index)}
+                                sx={{ outline: active === index ? '2px solid #1C2025' : '', borderRadius: '10px' }}
                             >
                                 <ListItemAvatar>
                                     <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
@@ -58,11 +62,17 @@ export default function UserList({ chats }) {
                                     }
                                 />
                             </ListItem>
+
                             <Divider variant="inset" component="li" />
                         </React.Fragment>
                     ))}
                 </List>
             )}
+
+            {loading && Array.from({ length: 4 }).map((_, i) => {
+                <Skeleton key={i} variant="rounded" width={'100%'} height={60} animation="wave" />
+            })}
+
         </>
 
 

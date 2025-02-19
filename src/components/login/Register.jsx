@@ -3,6 +3,9 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth, db } from '../../lib/firebase';
 import { doc, setDoc } from "firebase/firestore";
 import { toast } from 'react-hot-toast';
+import { styled } from '@mui/material';
+import { ButtonUi } from '../../shared/Button';
+
 import {
   TextField,
   Button,
@@ -13,6 +16,14 @@ import {
   Container,
   Box
 } from '@mui/material';
+
+
+const Block = styled(Container)({
+  backgroundColor: 'transparent',
+  color: '#f9f9f9'
+});
+
+
 
 const Register = () => {
   const [username, setUsername] = useState('');
@@ -53,7 +64,7 @@ const Register = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Block component="main" maxWidth="xs">
       <Box
         sx={{
           marginTop: 8,
@@ -62,14 +73,11 @@ const Register = () => {
           alignItems: 'center',
         }}
       >
-        <Card sx={{ width: '100%', mt: 2 }}>
-          <CardHeader
-            title={
-              <Typography variant="h5" component="h1" align="center">
-                Регистрация
-              </Typography>
-            }
-          />
+        <Card sx={{
+          width: '100%', mt: 2, bgcolor: 'transparent', boxShadow: 'none', borderRadius: '5px',
+          borderImageSource: 'linear-gradient(to right, red 0%, blue 100%)'
+        }}>
+
           <CardContent>
             <Box component="form" onSubmit={registerUser} sx={{ mt: 1 }}>
               <TextField
@@ -107,19 +115,12 @@ const Register = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Регистрация
-              </Button>
             </Box>
           </CardContent>
         </Card>
+        <ButtonUi text='Зарегистрироваться' />
       </Box>
-    </Container>
+    </Block>
   );
 };
 

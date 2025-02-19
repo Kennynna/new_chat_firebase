@@ -13,22 +13,33 @@ import ListModal from "../../shared/Modal.jsx";
 const List = ({ user }) => {
     const [chats, setChats] = useState([]);
     const { currentUser } = userStore()
-    
+    const [loading, setLoading] = useState(false)
+
     useEffect(() => {
+        setLoading(true)
         console.log('List.tsx ', currentUser)
         const unSub = onSnapshot(doc(db, 'userchats', currentUser.id),
             async (res) => {
-                const items = res.data().chats;
-                const promises = items.map(async (item) => {
-                    const userDocRef = doc(db, "users", item.receiverId);
-                    const userDocSnap = await getDoc(userDocRef);
+                try {
 
-                    const user = userDocSnap.data()
-                    console.log(user);
-                    return { ...item, user }
-                })
-                const chatData = await Promise.all(promises)
-                setChats(chatData.sort((a, b) => b.updatedAt - a.updatedAt))
+                    const items = res.data().chats;
+                    const promises = items.map(async (item) => {
+                        const userDocRef = doc(db, "users", item.receiverId);
+                        const userDocSnap = await getDoc(userDocRef);
+
+                        const user = userDocSnap.data()
+                        console.log(user);
+                        return { ...item, user }
+                    })
+                    const chatData = await Promise.all(promises)
+                    setChats(chatData.sort((a, b) => b.updatedAt - a.updatedAt))
+                }
+                catch(err){
+                    console.log(err)
+                }
+                finally{
+                    setLoading(false)
+                }
             }
 
         );
@@ -56,7 +67,7 @@ const List = ({ user }) => {
                     </div>
                 </div>
                 <div>
-                    <UserList chats={chats} />
+                    <UserList chats={chats} loading={loading}/>
                 </div>
             </div>
         </div>

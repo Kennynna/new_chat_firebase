@@ -12,12 +12,23 @@ import {
   Container,
   Box
 } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
+import { ButtonUi } from '../../shared/Button';
+import { styled } from '@mui/material';
+
+
+const Block = styled(Container)({
+  backgroundColor: 'transparent',
+  color: '#f9f9f9'
+});
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const loginUser = async (event) => {
+    setLoading(true);
     console.log(email, password);
     try {
       event.preventDefault();
@@ -26,33 +37,30 @@ const Login = () => {
       toast.success('Вход выполнен успешно');
     } catch (error) {
       console.error(error);
-      setEmail('');
-      setPassword('');
       toast.error('Ошибка при входе');
     } finally {
-      toast.error('Ошибка при входе');
-
+      setEmail('');
+      setPassword('');
+      setLoading(false)
     }
   };
 
   return (
-    <Container component="main" >
+    <Block component="main" >
       <Box
         sx={{
           marginTop: 8,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
+
         }}
       >
-        <Card sx={{ width: '100%', mt: 2 }}>
-          <CardHeader
-            title={
-              <Typography variant="h5" component="h1" align="center">
-                Вход
-              </Typography>
-            }
-          />
+        <Card sx={{
+          width: '100%', mt: 2, bgcolor: 'transparent', boxShadow: 'none', borderRadius: '5px',
+          borderImageSource: 'linear-gradient(to right, red 0%, blue 100%)'
+        }}>
+
           <CardContent>
             <Box component="form" onSubmit={loginUser} sx={{ mt: 1 }}>
               <TextField
@@ -79,19 +87,12 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Войти
-              </Button>
             </Box>
           </CardContent>
         </Card>
+        <ButtonUi disabled={loading} onClick={loginUser} text='Войти' />
       </Box>
-    </Container>
+    </Block>
   );
 };
 
