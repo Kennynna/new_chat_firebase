@@ -4,11 +4,8 @@ import { auth } from '../../lib/firebase.js';
 import { toast } from 'react-hot-toast';
 import {
   TextField,
-  Button,
   Card,
   CardContent,
-  CardHeader,
-  Typography,
   Container,
   Box
 } from '@mui/material';
@@ -19,7 +16,27 @@ import { styled } from '@mui/material';
 
 const Block = styled(Container)({
   backgroundColor: 'transparent',
-  color: '#f9f9f9'
+  color: '#f9f9f9',
+  maxWidth: '100%',
+  '& .MuiInputLabel-root': {
+    color: '#f9f9f9'
+  },
+  // Стиль лейбла при фокусе
+  '& .MuiInputLabel-root.Mui-focused': {
+    color: '#f9f9f9'
+  },
+  // Пример изменения цвета рамки у поля
+  '& .MuiOutlinedInput-root': {
+    '& fieldset': {
+      borderColor: '#f9f9f9'
+    },
+    '&:hover fieldset': {
+      borderColor: '#f9f9f9'
+    },
+    '&.Mui-focused fieldset': {
+      borderColor: '#f9f9f9'
+    }
+  }
 });
 
 const Login = () => {
@@ -60,35 +77,37 @@ const Login = () => {
           width: '100%', mt: 2, bgcolor: 'transparent', boxShadow: 'none', borderRadius: '5px',
           borderImageSource: 'linear-gradient(to right, red 0%, blue 100%)'
         }}>
+          {loading ? <CircularProgress /> : (
 
-          <CardContent>
-            <Box component="form" onSubmit={loginUser} sx={{ mt: 1 }}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="login-email"
-                label="Email"
-                name="email"
-                autoComplete="email"
-                autoFocus
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Пароль"
-                type="password"
-                id="login-password"
-                autoComplete="current-password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </Box>
-          </CardContent>
+            <CardContent>
+              <Box component="form" onSubmit={loginUser} sx={{ mt: 1 }}>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="login-email"
+                  label="Email"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Пароль"
+                  type="password"
+                  id="login-password"
+                  autoComplete="current-password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </Box>
+            </CardContent>
+          )}
         </Card>
         <ButtonUi disabled={loading} onClick={loginUser} text='Войти' />
       </Box>

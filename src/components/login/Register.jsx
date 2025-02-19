@@ -22,6 +22,25 @@ const Block = styled(Container)({
   backgroundColor: 'transparent',
   color: '#f9f9f9',
   maxWidth: '100%',
+  '& .MuiInputLabel-root': {
+    color: '#f9f9f9'
+  },
+  // Стиль лейбла при фокусе
+  '& .MuiInputLabel-root.Mui-focused': {
+    color: '#f9f9f9'
+  },
+  // Пример изменения цвета рамки у поля
+  '& .MuiOutlinedInput-root': {
+    '& fieldset': {
+      borderColor: '#f9f9f9'
+    },
+    '&:hover fieldset': {
+      borderColor: '#f9f9f9'
+    },
+    '&.Mui-focused fieldset': {
+      borderColor: '#f9f9f9'
+    }
+  }
 });
 
 
