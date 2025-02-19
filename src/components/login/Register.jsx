@@ -151,7 +151,7 @@ const Register = () => {
             </Box>
           </CardContent>
         </Card>
-        <ButtonUi text='Зарегистрироваться' />
+        <ButtonUi text='Зарегистрироваться' onClick={registerUser} />
       </Box>
     </Block>
   );
