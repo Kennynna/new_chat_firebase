@@ -20,7 +20,8 @@ import {
 
 const Block = styled(Container)({
   backgroundColor: 'transparent',
-  color: '#f9f9f9'
+  color: '#f9f9f9',
+  maxWidth: '100%',
 });
 
 
@@ -67,6 +68,7 @@ const Register = () => {
     <Block component="main" maxWidth="xs">
       <Box
         sx={{
+          maxWidth: '100%',
           marginTop: 8,
           display: 'flex',
           flexDirection: 'column',
@@ -74,12 +76,12 @@ const Register = () => {
         }}
       >
         <Card sx={{
-          width: '100%', mt: 2, bgcolor: 'transparent', boxShadow: 'none', borderRadius: '5px',
+          maxWidth: '100%', mt: 2, bgcolor: 'transparent', boxShadow: 'none', borderRadius: '5px',
           borderImageSource: 'linear-gradient(to right, red 0%, blue 100%)'
         }}>
 
           <CardContent>
-            <Box component="form" onSubmit={registerUser} sx={{ mt: 1 }}>
+            <Box component="form" onSubmit={registerUser} sx={{ mt: 1, maxWidth: '100%' }}>
               <TextField
                 margin="normal"
                 required

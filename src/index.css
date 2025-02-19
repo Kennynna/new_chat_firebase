@@ -33,3 +33,18 @@ body {
   display: flex;
 }
 
+.css-1cntdmb-MuiContainer-root {
+  max-width: 100% !important;
+}
+
+.css-16wblaj-MuiInputBase-input-MuiOutlinedInput-input {
+  color: #f9f9f9 !important;
+  opacity: 0.9;
+
+  &::placeholder {
+    color: #f9f9f9 !important;
+  }
+}
+.css-113d811-MuiFormLabel-root-MuiInputLabel-root{
+  color: #f9f9f9 !important;
+}
